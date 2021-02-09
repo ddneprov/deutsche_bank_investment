@@ -25,4 +25,16 @@ public class StockController {
         Response response = client.newCall(request).execute();
         return response.toString();
     }
+
+    @RequestMapping(value = "/getDetailUAL", method = RequestMethod.GET)
+    public static Response getDetailSecondTry() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=UAL&region=US")
+                .get()
+                .addHeader("x-rapidapi-key", "4231fec097msh8127e7bce64d8eap14f621jsn65254bbe7bbf")
+                .addHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com")
+                .build();
+        return client.newCall(request).execute();
+    }
 }
