@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.test.dto.ClientDto;
 import org.test.dto.LoginDto;
-import org.test.entity.Client;
 import org.test.orchestration.ClientOrchestration;
 import org.test.repository.ClientRepository;
 
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -17,14 +15,10 @@ import java.util.Optional;
 public class LoginController {
 
     @Autowired
-    private  ClientRepository clientRepository;
-
-    @Autowired
     private ClientOrchestration clientOrchestration;
 
-
     /**
-     * Возвращаем объект клиента, если он есть
+     * Возвращаем dto объект клиента, если он есть
      * @param loginDto
      * @return
      */
@@ -33,8 +27,13 @@ public class LoginController {
         return clientOrchestration.login(loginDto);
     }
 
+    /**
+     * Возвращаем dto объект клиента, если пользователь уже не зарегестирован
+     * @param loginDto
+     * @return
+     */
     @PostMapping("/registration")
-    public void registrationClient(@RequestBody LoginDto loginDto){
-
+    public ClientDto registrationClient(@RequestBody LoginDto loginDto){
+        return clientOrchestration.register(loginDto);
     }
 }

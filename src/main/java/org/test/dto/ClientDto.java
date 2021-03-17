@@ -5,6 +5,10 @@ import org.test.entity.Stock;
 
 import java.util.List;
 
+
+/**
+ * То, что отдаем на фронт, клиент без пароля
+ */
 @Builder
 public class ClientDto {
     private Integer id;
