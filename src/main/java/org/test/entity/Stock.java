@@ -12,6 +12,7 @@ public class Stock {
     private String ticket;
     private String currentCost;
 
+    public Stock(){}
 
     public String getCurrentCost() {
         return currentCost;
