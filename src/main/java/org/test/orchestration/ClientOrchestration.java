@@ -33,6 +33,7 @@ public class ClientOrchestration {
      * @return возвращаем Dto - без пароля
      */
     public ClientDto login(LoginDto loginDto){
+        log.info("Start login");
         if(isClientExistWithPassword(loginDto)){
             Optional<Client> client = clientRepository.findByUsername(loginDto.getUsername());
 
