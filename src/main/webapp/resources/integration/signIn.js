@@ -22,9 +22,11 @@ function signIn() {
         if (xhr.status === 200) {
             let json = JSON.parse(xhr.responseText);
             console.log(json)
-            // sessionStorage.setItem("token", json.token);
-            // sessionStorage.setItem("first_name", json.user.firstName);
-            // sessionStorage.setItem("last_name", json.user.lastName);
+            //var stocks;
+            //stocks = JSON.parse(xhr.responseText)
+            sessionStorage.setItem("user_id", json.id);
+            sessionStorage.setItem("username", json.username);
+            console.log("saved ->" + sessionStorage.getItem("user_id") + " " + sessionStorage.getItem("id"))
             // personal()
         }
     };
