@@ -11,6 +11,7 @@ import org.test.dto.LoginDto;
 import org.test.entity.Client;
 import org.test.entity.Stock;
 import org.test.repository.ClientRepository;
+import org.test.repository.StockRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class ClientOrchestration {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     /**
      * Авторизация нового пользователя
      * @param loginDto
@@ -37,17 +41,21 @@ public class ClientOrchestration {
         if(isClientExistWithPassword(loginDto)){
             Optional<Client> client = clientRepository.findByUsername(loginDto.getUsername());
 
-            List<Stock> stockList = new ArrayList<>();
-            Stock stockExample = new Stock();
+            String listStocks = client.get().getStocksIdNumbers();
+            //String stocksAmount = client.get().getStocksAmount();
+            String[] stocksStr = listStocks.split(",");
+            //String[] stockAmountStr = stocksAmount.split(",");
 
-            stockExample.setId(1);
-            stockExample.setTicket("UAL");
-            stockExample.setCurrentCost("100");
-            stockList.add(stockExample);
+            List<Stock> stocks = new ArrayList<>();
+
+            for(int i = 0; i < stocksStr.length; i++){
+                stocks.add(stockRepository.findFirstById(Integer.valueOf(stocksStr[i])));
+            }
+
 
             return ClientDto.builder()
                     .id(client.get().getId())
-                    .stockList(stockList)
+                    .stockList(stocks)
                     .username(client.get().getUsername()) // можно брать без проверки, тк уже уверены, что пользователь существует
                     .build();
         }
