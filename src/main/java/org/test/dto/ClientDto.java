@@ -13,7 +13,7 @@ import java.util.List;
 public class ClientDto {
     private Integer id;
     private String username;
-    private List<Stock> stockList;
+    private List<StockDto> stockList;
 
 
     public Integer getId() {
@@ -32,11 +32,11 @@ public class ClientDto {
         this.username = username;
     }
 
-    public List<Stock> getStockList() {
+    public List<StockDto> getStockList() {
         return stockList;
     }
 
-    public void setStockList(List<Stock> stockList) {
+    public void setStockList(List<StockDto> stockList) {
         this.stockList = stockList;
     }
 }

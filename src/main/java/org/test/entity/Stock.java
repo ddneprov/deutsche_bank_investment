@@ -11,8 +11,23 @@ public class Stock {
     private Integer id;
     private String ticket;
     private String currentCost;
+    private String fullName;
 
     public Stock(){}
+
+    public Stock(Stock stock){
+        this.ticket = stock.getTicket();
+        this.currentCost = stock.getCurrentCost();
+        this.fullName = stock.getFullName();
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public String getCurrentCost() {
         return currentCost;

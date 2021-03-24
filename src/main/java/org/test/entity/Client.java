@@ -12,6 +12,8 @@ public class Client {
     private Integer id;
     private String username;
     private String password;
+    private String stocksIdNumbers;
+    private String stocksAmount;
 
     public Client(Client client){
         this.username = client.getUsername();
@@ -19,6 +21,22 @@ public class Client {
     }
 
     public Client(){}
+
+    public String getStocksIdNumbers() {
+        return stocksIdNumbers;
+    }
+
+    public void setStocksIdNumbers(String stocksIdNumbers) {
+        this.stocksIdNumbers = stocksIdNumbers;
+    }
+
+    public String getStocksAmount() {
+        return stocksAmount;
+    }
+
+    public void setStocksAmount(String stocksAmount) {
+        this.stocksAmount = stocksAmount;
+    }
 
     public Integer getId() {
         return id;

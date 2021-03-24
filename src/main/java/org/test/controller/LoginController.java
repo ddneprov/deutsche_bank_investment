@@ -22,7 +22,8 @@ public class LoginController {
      * @param loginDto
      * @return
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ClientDto login(@RequestBody LoginDto loginDto){
         return clientOrchestration.login(loginDto);
     }

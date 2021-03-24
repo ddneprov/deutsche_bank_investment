@@ -4,13 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import org.test.dto.ClientDto;
 import org.test.dto.LoginDto;
+import org.test.dto.StockDto;
 import org.test.entity.Client;
 import org.test.entity.Stock;
 import org.test.repository.ClientRepository;
+import org.test.repository.StockRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,26 +28,40 @@ public class ClientOrchestration {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     /**
      * Авторизация нового пользователя
      * @param loginDto
      * @return возвращаем Dto - без пароля
      */
     public ClientDto login(LoginDto loginDto){
+        log.info("Start login");
         if(isClientExistWithPassword(loginDto)){
             Optional<Client> client = clientRepository.findByUsername(loginDto.getUsername());
 
-            List<Stock> stockList = new ArrayList<>();
-            Stock stockExample = new Stock();
+            String listStocks = client.get().getStocksIdNumbers();
+            String stocksAmount = client.get().getStocksAmount();
+            String[] stocksStr = listStocks.split(",");
+            String[] stockAmountStr = stocksAmount.split(",");
 
-            stockExample.setId(1);
-            stockExample.setTicket("UAL");
-            stockExample.setCurrentCost("100");
-            stockList.add(stockExample);
+            List<StockDto> stocks = new ArrayList<>();
+
+            for(int i = 0; i < stocksStr.length; i++){
+                Stock stock = stockRepository.findFirstById(Integer.valueOf(stocksStr[i]));
+                stocks.add(StockDto.builder()
+                        .fullName(stock.getFullName())
+                        .currentCost(stock.getCurrentCost())
+                        .ticket(stock.getTicket())
+                        .stockCount(Integer.valueOf(stockAmountStr[i]))
+                        .build());
+            }
+
 
             return ClientDto.builder()
                     .id(client.get().getId())
-                    .stockList(stockList)
+                    .stockList(stocks)
                     .username(client.get().getUsername()) // можно брать без проверки, тк уже уверены, что пользователь существует
                     .build();
         }
