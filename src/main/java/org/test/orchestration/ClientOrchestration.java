@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import org.test.dto.ClientDto;
 import org.test.dto.LoginDto;
+import org.test.dto.StockDto;
 import org.test.entity.Client;
 import org.test.entity.Stock;
 import org.test.repository.ClientRepository;
@@ -42,14 +42,20 @@ public class ClientOrchestration {
             Optional<Client> client = clientRepository.findByUsername(loginDto.getUsername());
 
             String listStocks = client.get().getStocksIdNumbers();
-            //String stocksAmount = client.get().getStocksAmount();
+            String stocksAmount = client.get().getStocksAmount();
             String[] stocksStr = listStocks.split(",");
-            //String[] stockAmountStr = stocksAmount.split(",");
+            String[] stockAmountStr = stocksAmount.split(",");
 
-            List<Stock> stocks = new ArrayList<>();
+            List<StockDto> stocks = new ArrayList<>();
 
             for(int i = 0; i < stocksStr.length; i++){
-                stocks.add(stockRepository.findFirstById(Integer.valueOf(stocksStr[i])));
+                Stock stock = stockRepository.findFirstById(Integer.valueOf(stocksStr[i]));
+                stocks.add(StockDto.builder()
+                        .fullName(stock.getFullName())
+                        .currentCost(stock.getCurrentCost())
+                        .ticket(stock.getTicket())
+                        .stockCount(Integer.valueOf(stockAmountStr[i]))
+                        .build());
             }
 
 

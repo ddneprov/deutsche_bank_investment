@@ -1,13 +1,9 @@
 package org.test.dto;
 
-import lombok.Builder;
-
-@Builder
-public class StockDto {
+public class NewStockDto {
     private String ticket;
     private String currentCost;
     private String fullName;
-    private Integer stockCount;
 
     public String getTicket() {
         return ticket;
@@ -19,9 +15,5 @@ public class StockDto {
 
     public String getFullName() {
         return fullName;
-    }
-
-    public Integer getStockCount() {
-        return stockCount;
     }
 }

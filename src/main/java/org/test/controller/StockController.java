@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.test.dto.StockDto;
+import org.test.dto.NewStockDto;
 import org.test.orchestration.StockOrchestration;
 
 @RestController
@@ -16,7 +16,7 @@ public class StockController {
     private StockOrchestration stockOrchestration;
 
     @PostMapping("/add")
-    public void addNewStock(@RequestBody StockDto stock){
+    public void addNewStock(@RequestBody NewStockDto stock){
         stockOrchestration.addNewStock(stock);
     }
 }
