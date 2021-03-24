@@ -19,4 +19,5 @@ public class StockController {
     public void addNewStock(@RequestBody NewStockDto stock){
         stockOrchestration.addNewStock(stock);
     }
+
 }
