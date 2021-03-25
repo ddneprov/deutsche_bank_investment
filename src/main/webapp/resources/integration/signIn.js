@@ -19,15 +19,17 @@ function signIn() {
     xhr.setRequestHeader("Access-Control-Allow-Headers", "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range")
 
     xhr.onreadystatechange = function () {
-        if (xhr.status === 200) {
-            let json = JSON.parse(xhr.responseText);
-            console.log(json)
-            //var stocks;
-            //stocks = JSON.parse(xhr.responseText)
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            var stockListJS = json.stockList;
+
             sessionStorage.setItem("user_id", json.id);
             sessionStorage.setItem("username", json.username);
-            console.log("saved ->" + sessionStorage.getItem("user_id") + " " + sessionStorage.getItem("id"))
-            // personal()
+            sessionStorage.setItem("stocks", stockListJS);
+            console.log("saved -> " + sessionStorage.getItem("user_id") + " " + sessionStorage.getItem("id"));
+            console.log("done");
+            window.location.href = "file:///Users/u18177231/Desktop/deutsche_bank_investment/src/main/webapp/resources/starter.html";
+            //starter()
         }
     };
     console.log(login.value + "   " +password.value);
